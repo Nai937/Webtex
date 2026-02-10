@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Valentine's Day - Morakot Square</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;700&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: #fffafb;
+            font-family: 'Montserrat', sans-serif;
+            position: relative;
+        }
+
+
+        /* Background Image with Warm Overlay */
+        .background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('pic/picture.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: -2;
+        }
+
+        /* Dark overlay for readability */
+        .background-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                135deg,
+                rgba(215, 215, 215, 0.5) 0%,
+                rgba(212, 212, 212, 0.4) 50%,
+                rgba(0, 0, 0, 0.5) 100%
+            );
+            z-index: -1;
+        }
+
+        /* Elegant Frame Border - CTLBT Style */
+        .frame-border {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.6);
+            pointer-events: none;
+            z-index: 500;
+            box-shadow:
+                inset 0 0 30px rgba(255, 0, 0, 0.15),
+                0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .frame-border::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            bottom: 8px;
+            border: 2px solid rgba(255, 0, 0, 0.6);
+            box-shadow:
+                0 0 15px rgba(255, 0, 0, 0.3),
+                inset 0 0 15px rgba(255, 0, 0, 0.1);
+        }
+
+        /* Corner Decorations */
+        .corner {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            z-index: 501;
+            pointer-events: none;
+        }
+
+        .corner::before,
+        .corner::after {
+            content: '';
+            position: absolute;
+            background: #ff0000;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+        }
+
+        .corner-tl { top: 15px; left: 15px; }
+        .corner-tl::before { top: 0; left: 0; width: 40px; height: 3px; }
+        .corner-tl::after { top: 0; left: 0; width: 3px; height: 40px; }
+
+        .corner-tr { top: 15px; right: 15px; }
+        .corner-tr::before { top: 0; right: 0; width: 40px; height: 3px; }
+        .corner-tr::after { top: 0; right: 0; width: 3px; height: 40px; }
+
+        .corner-bl { bottom: 15px; left: 15px; }
+        .corner-bl::before { bottom: 0; left: 0; width: 40px; height: 3px; }
+        .corner-bl::after { bottom: 0; left: 0; width: 3px; height: 40px; }
+
+        .corner-br { bottom: 15px; right: 15px; }
+        .corner-br::before { bottom: 0; right: 0; width: 40px; height: 3px; }
+        .corner-br::after { bottom: 0; right: 0; width: 3px; height: 40px; }
+
+        /* Red accent lines */
+        .accent-line {
+            position: fixed;
+            background: linear-gradient(90deg, transparent, #ff0000, transparent);
+            height: 2px;
+            z-index: 502;
+            pointer-events: none;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.4);
+        }
+
+        .accent-line.top {
+            top: 50px;
+            left: 80px;
+            right: 80px;
+        }
+
+        .accent-line.bottom {
+            bottom: 50px;
+            left: 80px;
+            right: 80px;
+        }
+
+        /* Animated Background Hearts */
+        .bg-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .bg-heart {
+            position: absolute;
+            font-size: 30px;
+            color: rgba(255, 0, 0, 0.1);
+            animation: floatUp 15s linear infinite;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Sparkle Effect */
+        .sparkle-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            animation: sparkle 3s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Fullscreen Button */
+        .fullscreen-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(255, 107, 157, 0.3);
+            border: 2px solid rgba(255, 107, 157, 0.5);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .fullscreen-btn:hover {
+            background: rgba(255, 107, 157, 0.5);
+            transform: scale(1.05);
+        }
+
+        .fullscreen-btn.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Main Title Container - CTLBT Style */
+        .main-title {
+            position: fixed;
+            top: 8%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 100;
+        }
+
+        .title-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .title-line {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        /* Elegant serif typography */
+        .title-text {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .title-letter {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            font-weight: 700;
+            color: #ffffff;
+            display: inline-block;
+            letter-spacing: 8px;
+            margin: 0 1px;
+            position: relative;
+            animation: elegantPulse 4s ease-in-out infinite;
+            text-shadow:
+                0 0 20px rgba(255, 255, 255, 0.4),
+                0 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .title-letter.red {
+            color: #ff1744;
+            text-shadow:
+                0 0 30px rgba(255, 0, 0, 0.7),
+                0 0 60px rgba(255, 0, 0, 0.4),
+                0 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .title-letter.space {
+            width: 25px;
+        }
+
+        @keyframes elegantPulse {
+            0%, 100% {
+                opacity: 1;
+                text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            }
+            50% {
+                opacity: 0.9;
+                text-shadow: 0 0 40px rgba(255, 255, 255, 0.5);
+            }
+        }
+
+        /* Subtitle styling */
+        .title-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.8);
+            letter-spacing: 15px;
+            text-transform: uppercase;
+            margin-top: 15px;
+            font-weight: 500;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Heart decorations - minimalist style */
+        .heart-decoration {
+            font-size: 2.5rem;
+            display: inline-block;
+            animation: heartBeatMinimal 2s ease infinite;
+            color: #ff0000;
+            margin: 0 20px;
+            opacity: 0.9;
+        }
+
+        .heart-decoration.left {
+            animation-delay: 0s;
+        }
+
+        .heart-decoration.right {
+            animation-delay: 1s;
+        }
+
+        @keyframes heartBeatMinimal {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        /* Floating mini hearts - subtle */
+        .title-hearts {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150%;
+            height: 300%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .mini-heart {
+            position: absolute;
+            font-size: 1rem;
+            color: #ff0000;
+            opacity: 0.3;
+            animation: floatAround 10s ease-in-out infinite;
+        }
+
+        @keyframes floatAround {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.2;
+            }
+            50% {
+                transform: translate(10px, -20px) scale(1.1);
+                opacity: 0.4;
+            }
+        }
+
+        /* Sparkles - subtle white dots */
+        .title-sparkles {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .title-sparkle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #fff;
+            border-radius: 50%;
+            animation: sparkleTitle 3s ease-in-out infinite;
+        }
+
+        @keyframes sparkleTitle {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1);
+            }
+        }
+
+        /* Decorative line under title */
+        .title-line-decoration {
+            width: 250px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ff0000, transparent);
+            margin: 20px auto;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+
+        /* Footer - CTLBT Style */
+        .footer {
+            position: fixed;
+            bottom: 5%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 100;
+        }
+
+        .footer p {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 500;
+            letter-spacing: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .footer .only-o {
+            color: #ffffff;
+            font-weight: 400;
+            letter-spacing: 6px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .footer .at-morakot {
+            color: #ff0000;
+            font-weight: 600;
+            text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            animation: glowRed 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glowRed {
+            from {
+                text-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+            }
+            to {
+                text-shadow: 0 0 25px rgba(255, 0, 0, 0.6),
+                             0 0 35px rgba(255, 0, 0, 0.4);
+            }
+        }
+
+        .footer .divider {
+            color: rgba(255, 255, 255, 0.3);
+            font-weight: 300;
+        }
+
+        .footer .date {
+            color: #ffffff;
+            font-weight: 400;
+            letter-spacing: 6px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Footer decoration line */
+        .footer-line {
+            width: 300px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            margin: 15px auto 0;
+        }
+
+        /* Message Display Area */
+        .message-area {
+            position: fixed;
+            top: 20%;
+            left: 0;
+            right: 0;
+            bottom: 15%;
+            z-index: 50;
+            overflow: hidden;
+        }
+
+        /* Floating Messages - Dark Glass Rectangle */
+        .floating-message {
+            position: relative;
+            padding: 24px 44px;
+            background: rgba(0, 0, 0, 0.55);
+            border-radius: 12px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 600;
+            white-space: nowrap;
+            box-shadow:
+                0 8px 30px rgba(0, 0, 0, 0.6),
+                0 0 20px rgba(255, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            cursor: default;
+            user-select: none;
+            letter-spacing: 2px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            animation: messageFloat 4s ease-in-out infinite;
+            overflow: hidden;
+        }
+
+        @keyframes messageFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        /* Glass shine reflection sweep */
+        .floating-message .glass-shine {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(
+                105deg,
+                transparent 20%,
+                rgba(255, 255, 255, 0.08) 45%,
+                rgba(255, 255, 255, 0.04) 55%,
+                transparent 80%
+            );
+            animation: shineSweep 6s ease-in-out infinite;
+            pointer-events: none;
+            border-radius: 12px;
+        }
+
+        @keyframes shineSweep {
+            0%, 100% { left: -100%; opacity: 0; }
+            10% { opacity: 1; }
+            50% { left: 150%; opacity: 1; }
+            60% { opacity: 0; }
+        }
+
+        /* Gradient Animation Text - Bold & Vivid */
+        .message-text {
+            background: linear-gradient(
+                270deg,
+                #ffffff,
+                #ffb3cc,
+                #ff4d7a,
+                #ffb3cc,
+                #ffe066,
+                #ffb3cc,
+                #ffffff
+            );
+            background-size: 800% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 5s ease infinite;
+            font-size: 2.4rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            filter: drop-shadow(0 0 10px rgba(255, 107, 157, 0.6))
+                    drop-shadow(0 0 20px rgba(255, 0, 0, 0.4));
+            position: relative;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Message wrapper - holds name + message box */
+        .message-wrapper {
+            position: absolute;
+        }
+
+        /* Sender name label above message */
+        .sender-name-label {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            white-space: nowrap;
+            pointer-events: none;
+            margin-bottom: 8px;
+        }
+
+        .sender-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 4px;
+            text-shadow:
+                0 0 20px rgba(255, 107, 157, 1),
+                0 0 40px rgba(255, 0, 100, 0.7),
+                0 0 60px rgba(255, 0, 100, 0.4),
+                0 0 80px rgba(255, 50, 120, 0.3),
+                0 2px 4px rgba(0, 0, 0, 0.9);
+        }
+
+        /* Cute animated wings */
+        .wing {
+            font-size: 2rem;
+            display: inline-block;
+            filter: drop-shadow(0 0 10px rgba(255, 200, 220, 1))
+                    drop-shadow(0 0 20px rgba(255, 107, 157, 0.6));
+        }
+
+        .wing-left {
+            transform: scaleX(-1);
+            animation: flapLeft 1.2s ease-in-out infinite;
+        }
+
+        .wing-right {
+            animation: flapRight 1.2s ease-in-out infinite;
+        }
+
+        @keyframes flapLeft {
+            0%, 100% { transform: scaleX(-1) rotate(0deg) scale(1); }
+            50% { transform: scaleX(-1) rotate(-20deg) scale(1.15); }
+        }
+
+        @keyframes flapRight {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(20deg) scale(1.15); }
+        }
+
+        /* Subtle top highlight */
+        .floating-message::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.25),
+                transparent
+            );
+        }
+
+        .floating-message::after {
+            display: none;
+        }
+
+        /* ========================================
+           HIGHLIGHTED / SPECIAL MESSAGE
+           ======================================== */
+        .floating-message.highlighted {
+            padding: 30px 54px;
+            background: linear-gradient(
+                135deg,
+                rgba(180, 50, 20, 0.65) 0%,
+                rgba(140, 20, 60, 0.6) 30%,
+                rgba(100, 10, 80, 0.55) 60%,
+                rgba(160, 40, 30, 0.6) 100%
+            );
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            box-shadow:
+                0 0 20px rgba(255, 215, 0, 0.3),
+                0 0 40px rgba(255, 100, 50, 0.2),
+                0 8px 30px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 215, 0, 0.3),
+                inset 0 -1px 0 rgba(255, 215, 0, 0.1);
+            animation: messageFloat 4s ease-in-out infinite, highlightGlow 2s ease-in-out infinite;
+        }
+
+        .floating-message.highlighted .message-text {
+            font-size: 3.2rem;
+            letter-spacing: 4px;
+            background: linear-gradient(
+                270deg,
+                #ffd700,
+                #ffffff,
+                #ff6b9d,
+                #ffd700,
+                #ffffff,
+                #ff4d7a,
+                #ffd700
+            );
+            background-size: 600% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8))
+                    drop-shadow(0 0 30px rgba(255, 100, 50, 0.5))
+                    drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9));
+        }
+
+        .floating-message.highlighted .message-heart {
+            color: #ffd700;
+            font-size: 1.8rem;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8))
+                    drop-shadow(0 0 20px rgba(255, 150, 0, 0.5));
+        }
+
+        /* Golden sparkle decorations for highlighted */
+        .highlight-sparkle {
+            position: absolute;
+            font-size: 1rem;
+            animation: sparkleFloat 2s ease-in-out infinite;
+            pointer-events: none;
+            filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.8));
+        }
+
+        @keyframes sparkleFloat {
+            0%, 100% { opacity: 0.3; transform: scale(0.8) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
+        }
+
+        @keyframes highlightGlow {
+            0%, 100% {
+                box-shadow:
+                    0 0 20px rgba(255, 215, 0, 0.3),
+                    0 0 40px rgba(255, 100, 50, 0.2),
+                    0 8px 30px rgba(0, 0, 0, 0.6),
+                    inset 0 1px 0 rgba(255, 215, 0, 0.3);
+                border-color: rgba(255, 215, 0, 0.4);
+            }
+            50% {
+                box-shadow:
+                    0 0 35px rgba(255, 215, 0, 0.5),
+                    0 0 60px rgba(255, 100, 50, 0.3),
+                    0 0 80px rgba(255, 50, 100, 0.15),
+                    0 8px 30px rgba(0, 0, 0, 0.6),
+                    inset 0 1px 0 rgba(255, 215, 0, 0.5);
+                border-color: rgba(255, 215, 0, 0.7);
+            }
+        }
+
+        /* Highlighted name - extra glow */
+        .message-wrapper.highlighted .sender-name {
+            font-size: 2.6rem;
+            text-shadow:
+                0 0 20px rgba(255, 215, 0, 1),
+                0 0 40px rgba(255, 215, 0, 0.7),
+                0 0 60px rgba(255, 150, 0, 0.5),
+                0 0 80px rgba(255, 100, 50, 0.3),
+                0 2px 4px rgba(0, 0, 0, 0.9);
+            color: #ffd700;
+        }
+
+        .message-wrapper.highlighted .wing {
+            font-size: 2.4rem;
+            filter: drop-shadow(0 0 12px rgba(255, 215, 0, 1))
+                    drop-shadow(0 0 25px rgba(255, 150, 0, 0.6));
+        }
+
+        /* Heart icon inside message */
+        .message-heart {
+            color: #ff1744;
+            margin: 0 12px;
+            font-size: 1.3rem;
+            display: inline-block;
+            animation: heartPulse 1.5s ease-in-out infinite;
+            filter: drop-shadow(0 0 6px rgba(255, 23, 68, 0.6));
+        }
+
+        @keyframes heartPulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.3); opacity: 1; }
+        }
+
+        /* Glow trail effect when messages pass each other */
+        .floating-message.passing {
+            animation: messageFloat 4s ease-in-out infinite, passingGlow 0.5s ease-out;
+        }
+
+        @keyframes passingGlow {
+            0% {
+                box-shadow:
+                    0 0 40px rgba(255, 0, 0, 0.5),
+                    0 8px 30px rgba(0, 0, 0, 0.6);
+            }
+            100% {
+                box-shadow:
+                    0 8px 30px rgba(0, 0, 0, 0.6),
+                    0 0 20px rgba(255, 0, 0, 0.1);
+            }
+        }
+
+        /* Collision Effect */
+        .collision-effect {
+            position: absolute;
+            pointer-events: none;
+            z-index: 200;
+        }
+
+        .collision-particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: particleExplode 0.6s ease-out forwards;
+        }
+
+        @keyframes particleExplode {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(0);
+                opacity: 0;
+            }
+        }
+
+        .collision-ring {
+            position: absolute;
+            border: 3px solid rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: ringExpand 0.5s ease-out forwards;
+        }
+
+        @keyframes ringExpand {
+            0% {
+                width: 0;
+                height: 0;
+                opacity: 1;
+            }
+            100% {
+                width: 100px;
+                height: 100px;
+                margin-left: -50px;
+                margin-top: -50px;
+                opacity: 0;
+            }
+        }
+
+        /* Wall Collision Effect */
+        .wall-flash {
+            position: fixed;
+            pointer-events: none;
+            z-index: 150;
+            background: linear-gradient(to right, rgba(255, 107, 157, 0.5), transparent);
+            animation: wallFlash 0.3s ease-out forwards;
+        }
+
+        .wall-flash.left { left: 0; top: 0; bottom: 0; width: 100px; }
+        .wall-flash.right { right: 0; top: 0; bottom: 0; width: 100px; background: linear-gradient(to left, rgba(255, 107, 157, 0.5), transparent); }
+        .wall-flash.top { top: 0; left: 0; right: 0; height: 100px; background: linear-gradient(to bottom, rgba(255, 107, 157, 0.5), transparent); }
+        .wall-flash.bottom { bottom: 0; left: 0; right: 0; height: 100px; background: linear-gradient(to top, rgba(255, 107, 157, 0.5), transparent); }
+
+        @keyframes wallFlash {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        /* Glow effect on collision - CTLBT Style */
+        .message-glow {
+            animation: glowPulse 0.3s ease-out;
+        }
+
+        @keyframes glowPulse {
+            0% {
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5),
+                            0 0 30px rgba(255, 0, 0, 0.4),
+                            0 0 60px rgba(255, 0, 0, 0.2);
+                border-color: #ff0000;
+            }
+            100% {
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+                border-color: rgba(255, 255, 255, 0.2);
+            }
+        }
+
+        /* No messages state */
+        .no-messages {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        /* Rose petals falling - CTLBT Style */
+        .petal {
+            position: fixed;
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(ellipse at center, #ff0000 0%, #8b0000 100%);
+            border-radius: 50% 0 50% 50%;
+            transform: rotate(45deg);
+            animation: petalFall linear infinite;
+            opacity: 0.5;
+            z-index: 2;
+        }
+
+        @keyframes petalFall {
+            0% {
+                transform: translateY(-20px) rotate(0deg) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg) translateX(100px);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Image -->
+    <div class="background-image"></div>
+    <div class="background-overlay"></div>
+
+    <!-- Elegant Frame -->
+    <div class="frame-border"></div>
+    <div class="corner corner-tl"></div>
+    <div class="corner corner-tr"></div>
+    <div class="corner corner-bl"></div>
+    <div class="corner corner-br"></div>
+    <div class="accent-line top"></div>
+    <div class="accent-line bottom"></div>
+
+    <!-- Background Hearts -->
+    <div class="bg-hearts" id="bgHearts"></div>
+
+    <!-- Sparkles -->
+    <div class="sparkle-container" id="sparkles"></div>
+
+    <!-- Rose Petals -->
+    <div id="petals"></div>
+
+    <!-- Fullscreen Button -->
+    <button class="fullscreen-btn" id="fullscreenBtn" onclick="toggleFullscreen()">
+        [ ] Fullscreen (F)
+    </button>
+
+    <!-- Main Title -->
+    <div class="main-title">
+        <div class="title-hearts" id="titleHearts"></div>
+        <div class="title-sparkles" id="titleSparkles"></div>
+        <div class="title-wrapper">
+            <div class="title-line">
+                <span class="heart-decoration left">&#10084;</span>
+                <div class="title-text" id="titleText"></div>
+                <span class="heart-decoration right">&#10084;</span>
+            </div>
+            <div class="title-line-decoration"></div>
+            <div class="title-subtitle">with love</div>
+        </div>
+    </div>
+
+    <!-- Message Display Area -->
+    <div class="message-area" id="messageArea">
+        <div class="no-messages" id="noMessages">
+            รอรับข้อความรัก...
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>
+            <span class="only-o">ONLY ON</span>
+            <span class="at-morakot">@Morakotsquare</span>
+            <span class="divider">|</span>
+            <span class="date">14 FEB</span>
+        </p>
+        <div class="footer-line"></div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script>
+        // ========================================
+        // Fullscreen Functions
+        // ========================================
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log('Fullscreen error:', err);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        // Update button text based on fullscreen state
+        document.addEventListener('fullscreenchange', () => {
+            const btn = document.getElementById('fullscreenBtn');
+            if (document.fullscreenElement) {
+                btn.textContent = '[X] Exit Fullscreen (Esc)';
+                btn.classList.add('hidden');
+            } else {
+                btn.textContent = '[ ] Fullscreen (F)';
+                btn.classList.remove('hidden');
+            }
+        });
+
+        // Keyboard shortcut
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'f' || e.key === 'F') {
+                toggleFullscreen();
+            }
+        });
+
+        // Show button on mouse move
+        let hideTimeout;
+        document.addEventListener('mousemove', () => {
+            const btn = document.getElementById('fullscreenBtn');
+            btn.classList.remove('hidden');
+            clearTimeout(hideTimeout);
+            if (document.fullscreenElement) {
+                hideTimeout = setTimeout(() => {
+                    btn.classList.add('hidden');
+                }, 2000);
+            }
+        });
+
+        // ========================================
+        // Title Animation
+        // ========================================
+        function createTitle() {
+            const titleText = "HAPPY VALENTINE'S DAY";
+            const container = document.getElementById('titleText');
+            // Letters to highlight in red (spelling "LOVE" scattered in the title)
+            const redIndices = [7, 13, 17, 19]; // V, E, A, Y -> rearranged as LOVE concept
+
+            titleText.split('').forEach((letter, index) => {
+                const span = document.createElement('span');
+                if (letter === ' ') {
+                    span.className = 'title-letter space';
+                } else {
+                    span.className = 'title-letter';
+                    // Make certain letters red for CTLBT style
+                    if (redIndices.includes(index)) {
+                        span.classList.add('red');
+                    }
+                    span.textContent = letter;
+                    span.setAttribute('data-letter', letter);
+                }
+                // Subtle stagger animation
+                span.style.animationDelay = `${index * 0.2}s`;
+                container.appendChild(span);
+            });
+        }
+
+        function createTitleHearts() {
+            const container = document.getElementById('titleHearts');
+            const positions = [
+                { left: '5%', top: '20%' },
+                { left: '15%', top: '60%' },
+                { left: '25%', top: '30%' },
+                { left: '75%', top: '25%' },
+                { left: '85%', top: '55%' },
+                { left: '95%', top: '35%' },
+                { left: '10%', top: '80%' },
+                { left: '90%', top: '75%' },
+            ];
+
+            positions.forEach((pos, i) => {
+                const heart = document.createElement('div');
+                heart.className = 'mini-heart';
+                heart.innerHTML = '&#10084;';
+                heart.style.left = pos.left;
+                heart.style.top = pos.top;
+                heart.style.animationDelay = `${i * 0.5}s`;
+                heart.style.fontSize = `${1 + Math.random()}rem`;
+                container.appendChild(heart);
+            });
+        }
+
+        function createTitleSparkles() {
+            const container = document.getElementById('titleSparkles');
+            for (let i = 0; i < 20; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'title-sparkle';
+                sparkle.style.left = `${Math.random() * 100}%`;
+                sparkle.style.top = `${Math.random() * 100}%`;
+                sparkle.style.animationDelay = `${Math.random() * 2}s`;
+                sparkle.style.animationDuration = `${1.5 + Math.random()}s`;
+                container.appendChild(sparkle);
+            }
+        }
+
+        // ========================================
+        // Configuration
+        // ========================================
+        const CONFIG = {
+            minSpeed: 0.3,
+            maxSpeed: 1.2,
+            passingDistance: 100  // Distance to trigger passing effect
+        };
+
+        // ========================================
+        // Background Effects
+        // ========================================
+        function createBackgroundHearts() {
+            const container = document.getElementById('bgHearts');
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'bg-heart';
+                heart.innerHTML = '&#10084;';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (10 + Math.random() * 10) + 's';
+                heart.style.animationDelay = Math.random() * 10 + 's';
+                heart.style.fontSize = (20 + Math.random() * 40) + 'px';
+                container.appendChild(heart);
+            }
+        }
+
+        function createSparkles() {
+            const container = document.getElementById('sparkles');
+            for (let i = 0; i < 50; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.animationDelay = Math.random() * 3 + 's';
+                sparkle.style.animationDuration = (2 + Math.random() * 2) + 's';
+                container.appendChild(sparkle);
+            }
+        }
+
+        function createPetals() {
+            const container = document.getElementById('petals');
+            for (let i = 0; i < 15; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                petal.style.left = Math.random() * 100 + '%';
+                petal.style.animationDuration = (8 + Math.random() * 7) + 's';
+                petal.style.animationDelay = Math.random() * 10 + 's';
+                petal.style.width = (10 + Math.random() * 10) + 'px';
+                petal.style.height = (10 + Math.random() * 10) + 'px';
+                container.appendChild(petal);
+            }
+        }
+
+        // ========================================
+        // Floating Message Class (No Collision)
+        // ========================================
+        class FloatingMessage {
+            constructor(id, text, area, name, highlighted) {
+                this.id = id;
+                this.text = text;
+                this.name = name || '';
+                this.highlighted = highlighted || false;
+                this.area = area;
+                this.element = null;
+                this.x = 0;
+                this.y = 0;
+                this.vx = 0;
+                this.vy = 0;
+                this.width = 0;
+                this.height = 0;
+                this.isPassing = false;
+                this.animationOffset = Math.random() * Math.PI * 2;
+                this.create();
+            }
+
+            create() {
+                // Wrapper holds name label + message box
+                this.wrapper = document.createElement('div');
+                this.wrapper.className = 'message-wrapper' + (this.highlighted ? ' highlighted' : '');
+
+                // Name label with wings (outside the message box)
+                if (this.name) {
+                    const nameLabel = document.createElement('div');
+                    nameLabel.className = 'sender-name-label';
+                    nameLabel.innerHTML = `<span class="wing wing-left">🪽</span><span class="sender-name">${this.escapeHtml(this.name)}</span><span class="wing wing-right">🪽</span>`;
+                    this.wrapper.appendChild(nameLabel);
+                }
+
+                // Message box
+                this.element = document.createElement('div');
+                this.element.className = 'floating-message' + (this.highlighted ? ' highlighted' : '');
+                this.element.innerHTML = `<div class="glass-shine"></div><span class="message-heart">♥</span><span class="message-text">${this.escapeHtml(this.text)}</span><span class="message-heart">♥</span>`;
+
+                // Add sparkle decorations for highlighted messages
+                if (this.highlighted) {
+                    const sparklePositions = [
+                        { top: '-8px', left: '-8px' },
+                        { top: '-8px', right: '-8px' },
+                        { bottom: '-8px', left: '-8px' },
+                        { bottom: '-8px', right: '-8px' },
+                        { top: '50%', left: '-12px' },
+                        { top: '50%', right: '-12px' },
+                    ];
+                    sparklePositions.forEach((pos, i) => {
+                        const sp = document.createElement('span');
+                        sp.className = 'highlight-sparkle';
+                        sp.textContent = '✦';
+                        Object.assign(sp.style, pos);
+                        sp.style.animationDelay = (i * 0.3) + 's';
+                        this.element.appendChild(sp);
+                    });
+                }
+
+                // Random warm background color (only for normal messages)
+                if (!this.highlighted) {
+                    const warmColors = [
+                        'rgba(120, 30, 30, 0.55)',   // dark rose
+                        'rgba(100, 40, 20, 0.55)',   // dark amber
+                        'rgba(80, 25, 45, 0.55)',    // dark magenta
+                        'rgba(90, 35, 15, 0.55)',    // dark burnt orange
+                        'rgba(60, 20, 40, 0.55)',    // dark plum
+                        'rgba(110, 25, 25, 0.55)',   // dark crimson
+                        'rgba(85, 40, 30, 0.55)',    // dark chocolate
+                        'rgba(70, 20, 50, 0.55)',    // dark wine
+                        'rgba(95, 30, 40, 0.55)',    // dark berry
+                        'rgba(75, 35, 25, 0.55)',    // dark copper
+                    ];
+                    const randomColor = warmColors[Math.floor(Math.random() * warmColors.length)];
+                    this.element.style.background = randomColor;
+                }
+
+                this.wrapper.appendChild(this.element);
+
+                // Random z-index for layering effect
+                this.wrapper.style.zIndex = Math.floor(Math.random() * 10) + 50;
+
+                // Random animation delay for variety
+                this.element.style.animationDelay = `${Math.random() * 3}s`;
+
+                this.area.appendChild(this.wrapper);
+
+                // Get dimensions after adding to DOM
+                const rect = this.wrapper.getBoundingClientRect();
+                this.width = rect.width;
+                this.height = rect.height;
+
+                // Random initial position
+                const areaRect = this.area.getBoundingClientRect();
+                this.x = Math.random() * (areaRect.width - this.width);
+                this.y = Math.random() * (areaRect.height - this.height);
+
+                // Random initial velocity (slower, more elegant)
+                const angle = Math.random() * Math.PI * 2;
+                const speed = CONFIG.minSpeed + Math.random() * (CONFIG.maxSpeed - CONFIG.minSpeed);
+                this.vx = Math.cos(angle) * speed;
+                this.vy = Math.sin(angle) * speed;
+
+                this.updatePosition();
+            }
+
+            escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            updatePosition() {
+                this.wrapper.style.left = this.x + 'px';
+                this.wrapper.style.top = this.y + 'px';
+            }
+
+            getCenterX() {
+                return this.x + this.width / 2;
+            }
+
+            getCenterY() {
+                return this.y + this.height / 2;
+            }
+
+            getBounds() {
+                return {
+                    left: this.x,
+                    right: this.x + this.width,
+                    top: this.y,
+                    bottom: this.y + this.height,
+                    centerX: this.x + this.width / 2,
+                    centerY: this.y + this.height / 2
+                };
+            }
+
+            update(areaWidth, areaHeight) {
+                // Update position (smooth floating)
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Soft bounce at walls (elegant reversal)
+                if (this.x <= 0) {
+                    this.x = 0;
+                    this.vx = Math.abs(this.vx);
+                } else if (this.x + this.width >= areaWidth) {
+                    this.x = areaWidth - this.width;
+                    this.vx = -Math.abs(this.vx);
+                }
+
+                if (this.y <= 0) {
+                    this.y = 0;
+                    this.vy = Math.abs(this.vy);
+                } else if (this.y + this.height >= areaHeight) {
+                    this.y = areaHeight - this.height;
+                    this.vy = -Math.abs(this.vy);
+                }
+
+                this.updatePosition();
+            }
+
+            // Trigger passing glow effect
+            triggerPassingEffect() {
+                if (!this.isPassing) {
+                    this.isPassing = true;
+                    this.element.classList.add('passing');
+                    setTimeout(() => {
+                        this.element.classList.remove('passing');
+                        this.isPassing = false;
+                    }, 500);
+                }
+            }
+
+            destroy() {
+                if (this.wrapper && this.wrapper.parentNode) {
+                    this.wrapper.parentNode.removeChild(this.wrapper);
+                }
+            }
+        }
+
+        // ========================================
+        // Proximity Detection (Pass-through with glow)
+        // ========================================
+        function checkProximity(msg1, msg2) {
+            const dx = msg1.getCenterX() - msg2.getCenterX();
+            const dy = msg1.getCenterY() - msg2.getCenterY();
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            return distance < CONFIG.passingDistance;
+        }
+
+        function handlePassing(msg1, msg2) {
+            // Trigger beautiful glow effect when messages pass each other
+            msg1.triggerPassingEffect();
+            msg2.triggerPassingEffect();
+        }
+
+        // ========================================
+        // Main Application - Server API + Socket.IO
+        // ========================================
+        class ValentineDisplay {
+            constructor() {
+                this.messages = [];
+                this.messageObjects = new Map();
+                this.area = document.getElementById('messageArea');
+                this.noMessagesEl = document.getElementById('noMessages');
+                this.animationId = null;
+                this.socket = io();
+
+                this.init();
+            }
+
+            init() {
+                // Create title animation
+                createTitle();
+                createTitleHearts();
+                createTitleSparkles();
+
+                // Create background effects
+                createBackgroundHearts();
+                createSparkles();
+                createPetals();
+
+                // Load initial messages from server
+                this.loadMessages();
+
+                // Listen for real-time updates via Socket.IO
+                this.socket.on('new_message', (msg) => {
+                    this.addMessage(msg);
+                    this.updateNoMessagesVisibility();
+                });
+
+                this.socket.on('delete_message', (data) => {
+                    this.removeMessage(data.id);
+                    this.updateNoMessagesVisibility();
+                });
+
+                this.socket.on('clear_messages', () => {
+                    this.clearAllMessages();
+                });
+
+                // Start animation loop
+                this.animate();
+
+                // Handle window resize
+                window.addEventListener('resize', () => this.handleResize());
+            }
+
+            updateNoMessagesVisibility() {
+                this.noMessagesEl.style.display = this.messageObjects.size === 0 ? 'block' : 'none';
+            }
+
+            clearAllMessages() {
+                this.messageObjects.forEach((msgObj, id) => {
+                    msgObj.destroy();
+                });
+                this.messageObjects.clear();
+                this.messages = [];
+                this.updateNoMessagesVisibility();
+            }
+
+            async loadMessages() {
+                const res = await fetch('/api/messages');
+                const stored = await res.json();
+                const currentIds = new Set(this.messages.map(m => m.id));
+
+                // Add new messages
+                stored.forEach(msg => {
+                    if (!currentIds.has(msg.id)) {
+                        this.addMessage(msg);
+                    }
+                });
+
+                this.updateNoMessagesVisibility();
+            }
+
+            addMessage(msg) {
+                this.messages.push(msg);
+                const floatingMsg = new FloatingMessage(msg.id, msg.text, this.area, msg.name, msg.highlighted);
+                this.messageObjects.set(msg.id, floatingMsg);
+            }
+
+            removeMessage(id) {
+                this.messages = this.messages.filter(m => m.id !== id);
+                const msgObj = this.messageObjects.get(id);
+                if (msgObj) {
+                    msgObj.destroy();
+                    this.messageObjects.delete(id);
+                }
+            }
+
+            animate() {
+                const areaRect = this.area.getBoundingClientRect();
+                const areaWidth = areaRect.width;
+                const areaHeight = areaRect.height;
+
+                // Update all messages
+                this.messageObjects.forEach(msg => {
+                    msg.update(areaWidth, areaHeight);
+                });
+
+                // Check proximity for passing glow effect
+                const msgArray = Array.from(this.messageObjects.values());
+                for (let i = 0; i < msgArray.length; i++) {
+                    for (let j = i + 1; j < msgArray.length; j++) {
+                        if (checkProximity(msgArray[i], msgArray[j])) {
+                            handlePassing(msgArray[i], msgArray[j]);
+                        }
+                    }
+                }
+
+                this.animationId = requestAnimationFrame(() => this.animate());
+            }
+
+            handleResize() {
+                // Reposition messages if they're outside bounds
+                const areaRect = this.area.getBoundingClientRect();
+                this.messageObjects.forEach(msg => {
+                    if (msg.x + msg.width > areaRect.width) {
+                        msg.x = areaRect.width - msg.width;
+                    }
+                    if (msg.y + msg.height > areaRect.height) {
+                        msg.y = areaRect.height - msg.height;
+                    }
+                    msg.updatePosition();
+                });
+            }
+        }
+
+        // Start application
+        document.addEventListener('DOMContentLoaded', () => {
+            new ValentineDisplay();
+        });
+    </script>
+</body>
+</html>

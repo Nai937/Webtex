@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Message - Admin Panel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        h1 {
+            color: #ff6b9d;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: #fff;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(255, 107, 157, 0.3);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 1rem;
+            resize: vertical;
+            min-height: 120px;
+            transition: all 0.3s ease;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #ff6b9d;
+            box-shadow: 0 0 15px rgba(255, 107, 157, 0.3);
+        }
+
+        textarea::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 107, 157, 0.4);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .btn-display {
+            width: 100%;
+            padding: 12px 30px;
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .btn-display:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #ff6b9d;
+        }
+
+        .message-list {
+            margin-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+        }
+
+        .message-list h3 {
+            color: #ff6b9d;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .message-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+        }
+
+        .message-text {
+            flex: 1;
+            margin-right: 10px;
+            word-break: break-word;
+        }
+
+        .btn-delete {
+            background: rgba(255, 77, 77, 0.2);
+            border: none;
+            color: #ff4d4d;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-delete:hover {
+            background: rgba(255, 77, 77, 0.4);
+        }
+
+        .btn-clear-all {
+            width: 100%;
+            padding: 10px;
+            background: rgba(255, 77, 77, 0.2);
+            border: 1px solid rgba(255, 77, 77, 0.3);
+            border-radius: 8px;
+            color: #ff4d4d;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-clear-all:hover {
+            background: rgba(255, 77, 77, 0.3);
+        }
+
+        .success-message {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+            padding: 10px 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .heart-icon {
+            display: inline-block;
+            animation: pulse 1.5s ease infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .no-messages {
+            color: rgba(255, 255, 255, 0.5);
+            text-align: center;
+            font-style: italic;
+        }
+
+        /* Login Page */
+        .login-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .login-container h1 {
+            margin-bottom: 5px;
+        }
+
+        .login-container .subtitle {
+            margin-bottom: 25px;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid rgba(255, 107, 157, 0.3);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+        .login-input:focus {
+            outline: none;
+            border-color: #ff6b9d;
+            box-shadow: 0 0 15px rgba(255, 107, 157, 0.3);
+        }
+
+        .login-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 14px 30px;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 107, 157, 0.4);
+        }
+
+        .login-error {
+            color: #ff4d4d;
+            font-size: 0.9rem;
+            margin-top: 12px;
+            display: none;
+        }
+
+        .login-heart {
+            font-size: 3rem;
+            color: #ff6b9d;
+            display: block;
+            margin-bottom: 15px;
+            animation: pulse 1.5s ease infinite;
+        }
+
+        .container.hidden,
+        .login-container.hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div class="login-container" id="loginPage">
+        <span class="login-heart">&#10084;</span>
+        <h1>Valentine Messages</h1>
+        <p class="subtitle">Admin Panel - Morakot Square</p>
+        <form id="loginForm">
+            <input
+                type="text"
+                id="loginId"
+                class="login-input"
+                placeholder="ID"
+                required
+                autocomplete="off"
+            />
+            <input
+                type="password"
+                id="loginPw"
+                class="login-input"
+                placeholder="Password"
+                required
+                autocomplete="off"
+            />
+            <button type="submit" class="btn-login">
+                &#10084; เข้าสู่ระบบ
+            </button>
+        </form>
+        <p class="login-error" id="loginError">ID หรือ รหัสผ่าน ไม่ถูกต้อง</p>
+    </div>
+
+    <!-- Admin Panel (hidden until login) -->
+    <div class="container hidden" id="adminPanel">
+        <h1><span class="heart-icon">&#10084;</span> Valentine Messages</h1>
+        <p class="subtitle">Admin Panel - Morakot Square</p>
+
+        <div class="success-message" id="successMessage">
+            ส่งข้อความสำเร็จ!
+        </div>
+
+        <form id="messageForm">
+            <div class="form-group">
+                <label for="senderName">ชื่อของคุณ:</label>
+                <input
+                    type="text"
+                    id="senderName"
+                    name="senderName"
+                    placeholder="พิมพ์ชื่อของคุณ..."
+                    style="width:100%;padding:12px 15px;border:2px solid rgba(255,107,157,0.3);border-radius:10px;background:rgba(255,255,255,0.1);color:#fff;font-size:1rem;transition:all 0.3s ease;margin-bottom:5px;"
+                    onfocus="this.style.borderColor='#ff6b9d';this.style.boxShadow='0 0 15px rgba(255,107,157,0.3)'"
+                    onblur="this.style.borderColor='rgba(255,107,157,0.3)';this.style.boxShadow='none'"
+                />
+            </div>
+            <div class="form-group">
+                <label for="message">พิมพ์ข้อความของคุณ:</label>
+                <textarea
+                    id="message"
+                    name="message"
+                    placeholder="พิมพ์ข้อความอวยพรวันวาเลนไทน์..."
+                    required
+                ></textarea>
+            </div>
+            <div class="form-group" style="display:flex;align-items:center;gap:10px;margin-bottom:15px;">
+                <input type="checkbox" id="highlightMsg" style="width:20px;height:20px;accent-color:#ff6b9d;cursor:pointer;" />
+                <label for="highlightMsg" style="color:#ff6b9d;font-weight:600;cursor:pointer;margin-bottom:0;font-size:0.95rem;">
+                    &#10024; เน้นข้อความนี้เป็นพิเศษ
+                </label>
+            </div>
+            <button type="submit" class="btn-submit">
+                &#10084; ส่งข้อความ
+            </button>
+        </form>
+
+        <button class="btn-display" onclick="openDisplay()">
+            เปิดหน้าจอแสดงผล
+        </button>
+
+        <div class="message-list">
+            <h3>ข้อความที่ส่งแล้ว:</h3>
+            <div id="messageListContainer">
+                <p class="no-messages">ยังไม่มีข้อความ</p>
+            </div>
+            <button class="btn-clear-all" id="clearAllBtn" style="display: none;" onclick="clearAllMessages()">
+                ลบข้อความทั้งหมด
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script>
+        // ========================================
+        // Login
+        // ========================================
+        const CREDENTIALS = { id: 'MK123', pw: 'gogo123' };
+
+        if (sessionStorage.getItem('valentineLoggedIn') === 'true') {
+            document.getElementById('loginPage').classList.add('hidden');
+            document.getElementById('adminPanel').classList.remove('hidden');
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const id = document.getElementById('loginId').value.trim();
+            const pw = document.getElementById('loginPw').value;
+
+            if (id === CREDENTIALS.id && pw === CREDENTIALS.pw) {
+                sessionStorage.setItem('valentineLoggedIn', 'true');
+                document.getElementById('loginPage').classList.add('hidden');
+                document.getElementById('adminPanel').classList.remove('hidden');
+            } else {
+                const errorEl = document.getElementById('loginError');
+                errorEl.style.display = 'block';
+                setTimeout(() => { errorEl.style.display = 'none'; }, 3000);
+            }
+        });
+
+        // ========================================
+        // Admin Panel - Server API + Socket.IO
+        // ========================================
+        let messages = [];
+        const socket = io();
+
+        // Load messages from server
+        async function loadMessages() {
+            const res = await fetch('/api/messages');
+            messages = await res.json();
+            renderMessages();
+        }
+
+        // Listen for real-time updates
+        socket.on('new_message', (msg) => {
+            messages.push(msg);
+            renderMessages();
+        });
+
+        socket.on('delete_message', (data) => {
+            messages = messages.filter(m => m.id !== data.id);
+            renderMessages();
+        });
+
+        socket.on('clear_messages', () => {
+            messages = [];
+            renderMessages();
+        });
+
+        // Render message list
+        function renderMessages() {
+            const container = document.getElementById('messageListContainer');
+            const clearBtn = document.getElementById('clearAllBtn');
+
+            if (messages.length === 0) {
+                container.innerHTML = '<p class="no-messages">ยังไม่มีข้อความ</p>';
+                clearBtn.style.display = 'none';
+            } else {
+                container.innerHTML = messages.map((msg) => `
+                    <div class="message-item">
+                        <span class="message-text">${msg.highlighted ? '<span style="color:#ffd700;">&#10024;</span> ' : ''}${msg.name ? '<strong>' + escapeHtml(msg.name) + ':</strong> ' : ''}${escapeHtml(msg.text)}</span>
+                        <button class="btn-delete" onclick="deleteMessage(${msg.id})">ลบ</button>
+                    </div>
+                `).join('');
+                clearBtn.style.display = 'block';
+            }
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Add new message via API
+        document.getElementById('messageForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const messageInput = document.getElementById('message');
+            const nameInput = document.getElementById('senderName');
+            const text = messageInput.value.trim();
+            const name = nameInput.value.trim();
+            const highlighted = document.getElementById('highlightMsg').checked;
+
+            if (text) {
+                await fetch('/api/messages', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        text: text,
+                        name: name || '',
+                        highlighted: highlighted,
+                        timestamp: new Date().toISOString()
+                    })
+                });
+
+                messageInput.value = '';
+                nameInput.value = '';
+                document.getElementById('highlightMsg').checked = false;
+
+                const successMsg = document.getElementById('successMessage');
+                successMsg.style.display = 'block';
+                setTimeout(() => { successMsg.style.display = 'none'; }, 2000);
+            }
+        });
+
+        // Delete single message via API
+        async function deleteMessage(msgId) {
+            await fetch('/api/messages/' + msgId, { method: 'DELETE' });
+        }
+
+        // Clear all messages via API
+        async function clearAllMessages() {
+            if (confirm('คุณต้องการลบข้อความทั้งหมดหรือไม่?')) {
+                await fetch('/api/messages', { method: 'DELETE' });
+            }
+        }
+
+        function openDisplay() {
+            window.open('display.html', '_blank');
+        }
+
+        // Load initial messages
+        loadMessages();
+    </script>
+</body>
+</html>
